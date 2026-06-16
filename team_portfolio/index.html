@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Portfolio</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <h1>Our Team</h1>
+    <ul>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button id="theme-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+  </nav>
+
+  <!-- TEAM SECTION -->
+  <section id="team">
+    <h2>Meet the Team</h2>
+    <div class="team-grid" id="team-grid">
+      <!-- Cards are added by JavaScript below -->
+    </div>
+  </section>
+
+  <!-- PROJECTS SECTION -->
+  <section id="projects">
+    <h2>Our Projects</h2>
+    <div class="projects-grid" id="projects-grid">
+      <!-- Cards are added by JavaScript below -->
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <form id="contact-form" novalidate>
+
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" placeholder="e.g. John Smith" />
+        <p class="error-msg" id="name-error">Please enter your name.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="e.g. john@example.com" />
+        <p class="error-msg" id="email-error">Please enter a valid email.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" placeholder="Write your message here..."></textarea>
+        <p class="error-msg" id="message-error">Message must be at least 10 characters.</p>
+      </div>
+
+      <button type="submit">Send Message</button>
+      <div id="success-msg">✅ Thanks! We'll get back to you soon.</div>
+
+    </form>
+  </section>
+
+  <footer>
+    <p>© 2026 Our Team. Built with HTML, CSS & JavaScript.</p>
+  </footer>
+
+  <script src="index.js"> </script>
+</body>
+</html>

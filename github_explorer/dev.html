@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub Developer Explorer</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+  <link rel="stylesheet" href="dev.css">
+</head>
+<body>
+  <div class="container">
+    <h1><i class="ti ti-brand-github"></i> GitHub Explorer</h1>
+    <p class="subtitle">Search any GitHub username to view their profile, stats, and repositories.</p>
+
+    <!-- Search -->
+    <div class="search-row">
+      <div class="search-wrap">
+        <i class="ti ti-search"></i>
+        <input type="text" id="username" placeholder="Enter GitHub username…"
+          onkeydown="if(event.key==='Enter') search()" />
+      </div>
+      <button class="search-btn" onclick="search()">
+        <i class="ti ti-search"></i> Search
+      </button>
+    </div>
+
+    <!-- Rate limit warning -->
+    <div class="rate-warn" id="rate-warn">
+      <i class="ti ti-alert-triangle"></i>
+      GitHub rate limit reached (60 req/hr unauthenticated). Please wait a few minutes and try again.
+    </div>
+
+    <!-- Error -->
+    <div class="error-box" id="error-box">
+      <i class="ti ti-user-off" style="font-size:26px;display:block;margin-bottom:8px"></i>
+      <span id="error-msg">User not found.</span>
+    </div>
+
+    <!-- Loading skeleton -->
+    <div class="loading-card" id="loading-profile">
+      <div style="display:flex;gap:14px;margin-bottom:1rem">
+        <div class="skeleton" style="width:72px;height:72px;border-radius:50%;flex-shrink:0"></div>
+        <div style="flex:1">
+          <div class="skeleton" style="height:16px;width:40%;margin-bottom:8px"></div>
+          <div class="skeleton" style="height:13px;width:25%;margin-bottom:10px"></div>
+          <div class="skeleton" style="height:13px;width:80%"></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+        <div class="skeleton" style="height:52px;border-radius:8px"></div>
+        <div class="skeleton" style="height:52px;border-radius:8px"></div>
+        <div class="skeleton" style="height:52px;border-radius:8px"></div>
+        <div class="skeleton" style="height:52px;border-radius:8px"></div>
+      </div>
+    </div>
+
+    <!-- Profile card -->
+    <div class="card" id="profile-card">
+      <div class="profile-top">
+        <img class="avatar" id="avatar" src="" alt="avatar" />
+        <div>
+          <div class="profile-name" id="profile-name"></div>
+          <div class="profile-login" id="profile-login"></div>
+          <div class="profile-bio" id="profile-bio"></div>
+        </div>
+      </div>
+      <div class="profile-stats">
+        <div class="pstat"><div class="pstat-n" id="st-repos">—</div><div class="pstat-l">Repos</div></div>
+        <div class="pstat"><div class="pstat-n" id="st-followers">—</div><div class="pstat-l">Followers</div></div>
+        <div class="pstat"><div class="pstat-n" id="st-following">—</div><div class="pstat-l">Following</div></div>
+        <div class="pstat"><div class="pstat-n" id="st-gists">—</div><div class="pstat-l">Gists</div></div>
+      </div>
+      <div class="profile-links" id="profile-links"></div>
+    </div>
+
+    <!-- Language chart -->
+    <div class="card" id="lang-card">
+      <div class="section-title">Language breakdown</div>
+      <div class="lang-bars" id="lang-bars"></div>
+    </div>
+
+    <!-- Repos -->
+    <div id="repos-section" style="display:none">
+      <div style="margin-bottom:10px">
+        <span class="section-title" id="repo-count"></span>
+      </div>
+      <div class="repos-list" id="repos-list"></div>
+    </div>
+
+  </div>
+
+  <script src="dev.js"></script>
+</body>
+</html>

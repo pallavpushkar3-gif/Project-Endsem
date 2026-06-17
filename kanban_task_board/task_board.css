@@ -1,0 +1,284 @@
+/* ---- Basic Reset ---- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+body.dark {
+  background-color: #1a1a1a;
+  color: #f0f0f0;
+}
+
+/* ---- Navigation ---- */
+nav {
+  background-color: #ffffff;
+  border-bottom: 2px solid #ddd;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body.dark nav {
+  background-color: #2a2a2a;
+  border-color: #444;
+}
+
+nav h1 {
+  font-size: 1.3rem;
+}
+
+#theme-btn {
+  padding: 8px 14px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 0.9rem;
+}
+
+body.dark #theme-btn {
+  background: #444;
+  color: #f0f0f0;
+  border-color: #666;
+}
+
+/* ---- Add Task Form ---- */
+.add-task-area {
+  max-width: 1100px;
+  margin: 24px auto 0;
+  padding: 0 24px;
+}
+
+.add-task-area h2 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.add-task-form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.add-task-form input {
+  flex: 1;
+  min-width: 180px;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: Arial, sans-serif;
+  background: #fff;
+  color: #333;
+}
+
+body.dark .add-task-form input {
+  background: #2a2a2a;
+  color: #f0f0f0;
+  border-color: #555;
+}
+
+.add-task-form select {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: Arial, sans-serif;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+body.dark .add-task-form select {
+  background: #2a2a2a;
+  color: #f0f0f0;
+  border-color: #555;
+}
+
+.add-task-form button {
+  padding: 10px 20px;
+  background-color: #4a90d9;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.add-task-form button:hover {
+  background-color: #357abd;
+}
+
+.add-error {
+  color: red;
+  font-size: 0.82rem;
+  margin-top: 6px;
+  display: none;
+}
+
+.add-error.show {
+  display: block;
+}
+
+/* ---- Board ---- */
+.board {
+  max-width: 1100px;
+  margin: 24px auto;
+  padding: 0 24px 48px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* ---- Column ---- */
+.column {
+  background-color: #e9e9e9;
+  border-radius: 8px;
+  padding: 16px;
+  min-height: 300px;
+}
+
+body.dark .column {
+  background-color: #2a2a2a;
+}
+
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.column-header h2 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.card-count {
+  background: #ccc;
+  color: #333;
+  border-radius: 12px;
+  padding: 2px 10px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+body.dark .card-count {
+  background: #444;
+  color: #f0f0f0;
+}
+
+/* ---- Drop Zone ---- */
+.cards-container {
+  min-height: 200px;
+  border: 2px dashed transparent;
+  border-radius: 6px;
+  padding: 4px;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.cards-container.drag-over {
+  border-color: #4a90d9;
+  background-color: rgba(74, 144, 217, 0.08);
+}
+
+/* ---- Card ---- */
+.card {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 14px;
+  margin-bottom: 10px;
+  cursor: grab;
+}
+
+.card:active {
+  cursor: grabbing;
+}
+
+body.dark .card {
+  background: #1a1a1a;
+  border-color: #444;
+}
+
+.card.dragging {
+  opacity: 0.4;
+}
+
+.card-title {
+  font-size: 0.95rem;
+  font-weight: bold;
+  margin-bottom: 6px;
+  word-break: break-word;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.card-actions button {
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  background: #f5f5f5;
+  color: #333;
+}
+
+body.dark .card-actions button {
+  background: #2a2a2a;
+  color: #f0f0f0;
+  border-color: #555;
+}
+
+.card-actions button:hover {
+  background: #e0e0e0;
+}
+
+body.dark .card-actions button:hover {
+  background: #3a3a3a;
+}
+
+.btn-delete {
+  color: #cc0000 !important;
+  border-color: #cc0000 !important;
+}
+
+/* ---- Edit mode on card ---- */
+.card-edit-input {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 0.9rem;
+  font-family: Arial, sans-serif;
+  border: 1px solid #4a90d9;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  background: #fff;
+  color: #333;
+}
+
+body.dark .card-edit-input {
+  background: #1a1a1a;
+  color: #f0f0f0;
+  border-color: #4a90d9;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 650px) {
+  .board {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kanban Board</title>
+  <link rel="stylesheet" href="style6.css">
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <h1>📋 Kanban Board</h1>
+    <button id="theme-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+  </nav>
+
+  <!-- ADD TASK AREA -->
+  <div class="add-task-area">
+    <h2>Add a new task</h2>
+    <div class="add-task-form">
+      <input type="text" id="task-input" placeholder="e.g. Design the homepage..." />
+      <select id="column-select">
+        <option value="todo">To Do</option>
+        <option value="inprogress">In Progress</option>
+        <option value="done">Done</option>
+      </select>
+      <button onclick="addTask()">Add Task</button>
+    </div>
+    <p class="add-error" id="add-error">Please enter a task name.</p>
+  </div>
+
+  <!-- BOARD -->
+  <div class="board">
+
+    <div class="column" id="col-todo">
+      <div class="column-header">
+        <h2>📝 To Do</h2>
+        <span class="card-count" id="count-todo">0</span>
+      </div>
+      <div class="cards-container" id="todo" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event, 'todo')">
+      </div>
+    </div>
+
+    <div class="column" id="col-inprogress">
+      <div class="column-header">
+        <h2>⚙️ In Progress</h2>
+        <span class="card-count" id="count-inprogress">0</span>
+      </div>
+      <div class="cards-container" id="inprogress" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event, 'inprogress')">
+      </div>
+    </div>
+
+    <div class="column" id="col-done">
+      <div class="column-header">
+        <h2>✅ Done</h2>
+        <span class="card-count" id="count-done">0</span>
+      </div>
+      <div class="cards-container" id="done" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event, 'done')">
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script6.js">
+
+  </script>
+</body>
+</html>

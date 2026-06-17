@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Quiz App</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+    <link rel="stylesheet" href="quiz.css">
+  </head>
+  <body>
+    <div class="container">
+      <!-- Topic selection -->
+      <div id="screen-topic">
+        <h1><i class="ti ti-brain"></i> Quiz App</h1>
+        <p class="subtitle">
+          Pick a topic to begin — 10 questions, scored live.
+        </p>
+        <div class="topic-grid" id="topic-grid"></div>
+      </div>
+
+      <!-- Quiz -->
+      <div id="screen-quiz" style="display: none">
+        <div class="card">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+          <div class="q-meta">
+            <span id="q-num"></span>
+            <span id="q-score"></span>
+          </div>
+          <div class="question" id="question"></div>
+          <div class="options" id="options"></div>
+          <div class="feedback" id="feedback"></div>
+          <button class="next-btn" id="next-btn" onclick="nextQuestion()">
+            Next question <i class="ti ti-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div id="screen-result" style="display: none">
+        <div class="card">
+          <div class="result">
+            <div class="score-ring">
+              <svg width="120" height="120" viewBox="0 0 120 120">
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="50"
+                  fill="none"
+                  stroke-width="8"
+                  stroke="#e8e5de"
+                />
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="50"
+                  fill="none"
+                  stroke-width="8"
+                  id="ring-arc"
+                  stroke="#3b6d11"
+                  stroke-linecap="round"
+                  stroke-dasharray="314"
+                  stroke-dashoffset="314"
+                />
+              </svg>
+              <div class="score-label">
+                <span class="score-pct" id="final-pct">0%</span>
+                <span class="score-sub" id="final-frac"></span>
+              </div>
+            </div>
+            <div class="result-msg" id="result-msg"></div>
+            <div class="result-detail" id="result-detail"></div>
+            <div class="stats-row">
+              <div class="stat">
+                <div class="stat-n green" id="stat-correct">0</div>
+                <div class="stat-lbl">Correct</div>
+              </div>
+              <div class="stat">
+                <div class="stat-n red" id="stat-wrong">0</div>
+                <div class="stat-lbl">Wrong</div>
+              </div>
+              <div class="stat">
+                <div class="stat-n" id="stat-total">0</div>
+                <div class="stat-lbl">Total</div>
+              </div>
+            </div>
+            <div class="action-row">
+              <button class="retry-btn" id="retry-btn" onclick="retryTopic()">
+                <i class="ti ti-refresh"></i> Retry
+              </button>
+              <button class="home-btn" onclick="goHome()">
+                <i class="ti ti-home"></i> Topics
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="quiz.js"></script>
+  </body>
+</html>

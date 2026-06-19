@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>News App</title>
+    <link rel="stylesheet" href="news.css" />
+  </head>
+  <body>
+    <nav>
+      <!-- Top Navbar -->
+      <div class="top-nav">
+        <div class="logo">DailyNews</div>
+
+        <div class="search-bar">
+          <input
+            id="search-text"
+            type="text"
+            placeholder="Search for topics, locations & sources"
+          />
+          <button id="search-button">🔍</button>
+        </div>
+      </div>
+
+      <!-- Category Navbar -->
+      <div class="category-nav">
+        <ul>
+          <li id="home" onclick="onNavItemClick('India')">Home</li>
+          <li id="sports" onclick="onNavItemClick('sports')">Sports</li>
+          <li id="finance" onclick="onNavItemClick('finance')">Finance</li>
+          <li id="politics" onclick="onNavItemClick('politics')">Politics</li>
+          <li id="gaming" onclick="onNavItemClick('gaming')">Gaming</li>
+          <li id="technology" onclick="onNavItemClick('technology')">
+            Technology
+          </li>
+          <li id="health" onclick="onNavItemClick('health')">Health</li>
+        </ul>
+      </div>
+    </nav>
+
+    <main>
+      <div class="cards-container container flex" id="cards-container"></div>
+    </main>
+
+    <template id="template-news-card">
+      <div class="card">
+        <div class="card-header">
+          <img
+            src="https://via.placeholder.com/400x200"
+            alt="news-image"
+            id="news-img"
+          />
+        </div>
+        <div class="card-content">
+          <h3 id="news-title">This is the Title</h3>
+          <h6 class="news-source" id="news-source">End Gadget 26/08/2023</h6>
+          <p class="news-desc" id="news-desc"></p>
+        </div>
+      </div>
+    </template>
+
+    <script src="news.js"></script>
+  </body>
+</html>

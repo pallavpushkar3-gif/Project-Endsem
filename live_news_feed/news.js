@@ -1,6 +1,9 @@
-
 const API_KEY = "1d3a0eefa97b499d8fbc4ee93eeb40b7";
 const url = "https://newsapi.org/v2/everything?q=";
+
+// Cache config
+const CACHE_DURATION_MS = 15 * 60 * 1000; // 15 minutes
+const newsCache = {}; // { [query]: { articles: [...], timestamp: number } }
 
 window.addEventListener("load", function () {
   fetchNews("India");
@@ -11,9 +14,59 @@ function reload() {
 }
 
 async function fetchNews(query) {
-  const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);
-  const data = await res.json();
-  bindData(data.articles);
+  const cacheKey = query.toLowerCase();
+  const cached = newsCache[cacheKey];
+  const now = Date.now();
+
+  // Serve from cache if it exists and hasn't expired
+  if (cached && now - cached.timestamp < CACHE_DURATION_MS) {
+    console.log(`Serving "${query}" from cache`);
+    bindData(cached.articles);
+    return;
+  }
+
+  try {
+    const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);
+
+    if (!res.ok) {
+      // If rate-limited or errored, fall back to stale cache if we have one
+      if (cached) {
+        console.warn(`API error (status ${res.status}), serving stale cache for "${query}"`);
+        bindData(cached.articles);
+        return;
+      }
+      throw new Error(`API request failed with status ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    if (data.status === "error") {
+      if (cached) {
+        console.warn(`API returned error, serving stale cache for "${query}"`);
+        bindData(cached.articles);
+        return;
+      }
+      throw new Error(data.message || "API returned an error");
+    }
+
+    // Save to cache
+    newsCache[cacheKey] = {
+      articles: data.articles,
+      timestamp: now,
+    };
+
+    bindData(data.articles);
+  } catch (err) {
+    console.error("Failed to fetch news:", err);
+
+    // Last resort: serve stale cache if available, even if expired
+    if (cached) {
+      bindData(cached.articles);
+    } else {
+      const cardsContainer = document.getElementById("cards-container");
+      cardsContainer.innerHTML = `<p class="error-msg">Unable to load news right now. Please try again later.</p>`;
+    }
+  }
 }
 
 function bindData(articles) {
@@ -21,6 +74,11 @@ function bindData(articles) {
   const newsCardTemplate = document.getElementById("template-news-card");
 
   cardsContainer.innerHTML = "";
+
+  if (!articles || articles.length === 0) {
+    cardsContainer.innerHTML = `<p class="error-msg">No articles found.</p>`;
+    return;
+  }
 
   articles.forEach(function (article) {
     if (!article.urlToImage) {

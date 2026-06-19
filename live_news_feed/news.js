@@ -1,64 +1,52 @@
-const API_KEY = "1d3a0eefa97b499d8fbc4ee93eeb40b7";
-const url = "https://newsapi.org/v2/everything?q=";
-
+const url = "/api/news?q="; // same-origin call to our Vercel serverless function
+ 
 // Cache config
 const CACHE_DURATION_MS = 15 * 60 * 1000; // 15 minutes
 const newsCache = {}; // { [query]: { articles: [...], timestamp: number } }
-
+ 
 window.addEventListener("load", function () {
   fetchNews("India");
 });
-
+ 
 function reload() {
   window.location.reload();
 }
-
+ 
 async function fetchNews(query) {
   const cacheKey = query.toLowerCase();
   const cached = newsCache[cacheKey];
   const now = Date.now();
-
+ 
   // Serve from cache if it exists and hasn't expired
   if (cached && now - cached.timestamp < CACHE_DURATION_MS) {
     console.log(`Serving "${query}" from cache`);
     bindData(cached.articles);
     return;
   }
-
+ 
   try {
-    const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);
-
-    if (!res.ok) {
-      // If rate-limited or errored, fall back to stale cache if we have one
-      if (cached) {
-        console.warn(`API error (status ${res.status}), serving stale cache for "${query}"`);
-        bindData(cached.articles);
-        return;
-      }
-      throw new Error(`API request failed with status ${res.status}`);
-    }
-
+    const res = await fetch(`${url}${encodeURIComponent(query)}`);
     const data = await res.json();
-
-    if (data.status === "error") {
+ 
+    if (!res.ok || data.status === "error" || !Array.isArray(data.articles)) {
       if (cached) {
-        console.warn(`API returned error, serving stale cache for "${query}"`);
+        console.warn(`API error, serving stale cache for "${query}"`);
         bindData(cached.articles);
         return;
       }
-      throw new Error(data.message || "API returned an error");
+      throw new Error(data.message || `Request failed with status ${res.status}`);
     }
-
+ 
     // Save to cache
     newsCache[cacheKey] = {
       articles: data.articles,
       timestamp: now,
     };
-
+ 
     bindData(data.articles);
   } catch (err) {
     console.error("Failed to fetch news:", err);
-
+ 
     // Last resort: serve stale cache if available, even if expired
     if (cached) {
       bindData(cached.articles);
@@ -68,51 +56,51 @@ async function fetchNews(query) {
     }
   }
 }
-
+ 
 function bindData(articles) {
   const cardsContainer = document.getElementById("cards-container");
   const newsCardTemplate = document.getElementById("template-news-card");
-
+ 
   cardsContainer.innerHTML = "";
-
-  if (!articles || articles.length === 0) {
+ 
+  if (!Array.isArray(articles) || articles.length === 0) {
     cardsContainer.innerHTML = `<p class="error-msg">No articles found.</p>`;
     return;
   }
-
+ 
   articles.forEach(function (article) {
     if (!article.urlToImage) {
       return;
     }
     const cardClone = newsCardTemplate.content.cloneNode(true);
-
+ 
     fillDataInCard(cardClone, article);
-
+ 
     cardsContainer.appendChild(cardClone);
   });
 }
-
+ 
 function fillDataInCard(cardClone, article) {
   const newsImg = cardClone.querySelector("#news-img");
   const newsTitle = cardClone.querySelector("#news-title");
   const newsSource = cardClone.querySelector("#news-source");
   const newsDesc = cardClone.querySelector("#news-desc");
-
+ 
   newsImg.src = article.urlToImage;
   newsTitle.innerHTML = article.title;
   newsDesc.innerHTML = article.description;
-
+ 
   const date = new Date(article.publishedAt).toLocaleString("en-US", {
     timeZone: "Asia/Jakarta",
   });
-
+ 
   newsSource.innerHTML = `${article.source.name} · ${date}`;
-
+ 
   cardClone.firstElementChild.addEventListener("click", function () {
     window.open(article.url, "_blank");
   });
 }
-
+ 
 let curSelectedNav = null;
 function onNavItemClick(id) {
   fetchNews(id);
@@ -123,19 +111,19 @@ function onNavItemClick(id) {
   curSelectedNav = navItem;
   curSelectedNav.classList.add("active");
 }
-
+ 
 const searchButton = document.getElementById("search-button");
 const searchText = document.getElementById("search-text");
-
+ 
 searchButton.addEventListener("click", function () {
   const query = searchText.value;
-
+ 
   if (!query) {
     return;
   }
-
+ 
   fetchNews(query);
-
+ 
   if (curSelectedNav != null) {
     curSelectedNav.classList.remove("active");
   }

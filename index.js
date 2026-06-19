@@ -49,13 +49,13 @@ var projects = [
     name: "2. Quiz App",
     description:
       "A multiple-choice quiz that tracks your score and gives instant feedback.",
-    link: "#",
+    link: "./quiz_app/quiz.html",
   },
   {
     name: "3. Expense Tracker",
     description:
       "Log income and expenses. Data saves to localStorage so it never disappears.",
-    link: "#",
+    link: "./expense_tracker/expense.html",
   },
   {
     name: "4. Live News Feed",
@@ -67,13 +67,13 @@ var projects = [
     name: "5. GitHub Explorer",
     description:
       "Search any GitHub username to see their profile, repos, and language stats.",
-    link: "#",
+    link: "./github_explorer/dev.html",
   },
   {
     name: "6. Kanban Board",
     description:
       "A drag-and-drop task board with To Do, In Progress, and Done columns.",
-    link: "#",
+    link: "./kanban_task_board/task_board.html",
   },
 ];
 

@@ -61,7 +61,7 @@ var projects = [
     name: "4. Live News Feed",
     description:
       "Fetches real news articles from the NewsAPI with search and category filters.",
-    link: "#",
+    link: "./live_news_feed/news.html",
   },
   {
     name: "5. GitHub Explorer",

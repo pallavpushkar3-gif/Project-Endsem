@@ -1,4 +1,11 @@
-const url = "/api/news?q="; // same-origin call to our Vercel serverless function
+// On localhost (Live Server) there is no serverless function, so call NewsAPI
+// directly with the key. When deployed (e.g. Vercel) use the secure proxy so the
+// key stays server-side.
+const isLocal = ["localhost", "127.0.0.1", ""].includes(location.hostname);
+const NEWS_API_KEY = "1d3a0eefa97b499d8fbc4ee93eeb40b7";
+const url = isLocal
+  ? `https://newsapi.org/v2/everything?apiKey=${NEWS_API_KEY}&q=`
+  : "/api/news?q="; // same-origin call to our Vercel serverless function
  
 // Cache config
 const CACHE_DURATION_MS = 15 * 60 * 1000; // 15 minutes

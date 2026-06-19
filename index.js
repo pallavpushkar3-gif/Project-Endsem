@@ -1,14 +1,14 @@
 // 1. TEAM DATA
 var teamMembers = [
   {
-    name: "Arjun Kumar",
+    name: "Pushkar Pallav",
     bio: "Loves building clean UIs and making sure everything works together.",
     skills: ["HTML", "CSS", "JavaScript"],
     github: "https://github.com",
     initials: "AK",
   },
   {
-    name: "Priya Mehta",
+    name: "Nikhil Kumar",
     bio: "Turns ideas into beautiful, user-friendly interfaces.",
     skills: ["CSS", "Figma", "Responsive Design"],
     github: "https://github.com",

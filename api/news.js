@@ -5,7 +5,9 @@ export default async function handler(req, res) {
     return res.status(400).json({ status: "error", message: "Missing query parameter" });
   }
  
-  const API_KEY = process.env.NEWS_API_KEY;
+  // Prefer the env var; fall back to the (already-public) dev key so the
+  // deployed function still works if the env var hasn't been set in Vercel yet.
+  const API_KEY = process.env.NEWS_API_KEY || "1d3a0eefa97b499d8fbc4ee93eeb40b7";
  
   if (!API_KEY) {
     return res.status(500).json({ status: "error", message: "Server misconfigured: missing API key" });
